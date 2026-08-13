@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/ars/Projects/tui-timer/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

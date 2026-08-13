@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/tui-timer.dir/link.d "CMakeFiles/tui-timer.dir/src/main.cpp.o" "CMakeFiles/tui-timer.dir/src/ui.cpp.o" -o tui-timer
