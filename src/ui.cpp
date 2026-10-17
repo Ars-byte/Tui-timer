@@ -21,6 +21,10 @@ namespace tui {
 
 namespace {
 
+const char* tr(Lang lang, const char* en, const char* es) {
+  return lang == Lang::ES ? es : en;
+}
+
 // Dígitos grandes: 5 filas x 3 columnas
 const char* const DIGITS[10][5] = {
     {"███", "█ █", "█ █", "█ █", "███"},  // 0
@@ -51,16 +55,26 @@ int wcells(const std::string& s) {
   return n;
 }
 
-std::string status_text(State st) {
+std::string status_text(State st, Lang lang) {
   switch (st) {
-    case State::IDLE:      return "LISTO  ·  pulsa ESPACIO para empezar";
-    case State::RUNNING:   return "EN MARCHA";
-    case State::PAUSED:    return "PAUSADO";
-    case State::FINISHED:  return "TIEMPO CUMPLIDO";
-    case State::SW_IDLE:   return "CRONÓMETRO LISTO  ·  pulsa ESPACIO";
-    case State::SW_RUN:    return "CRONÓMETRO EN MARCHA";
-    case State::SW_PAUSED: return "CRONÓMETRO PAUSADO";
-    case State::SETTING:   return "DEFINIR DURACIÓN";
+    case State::IDLE:
+      return tr(lang, "READY  ·  press SPACE to start",
+                      "LISTO  ·  pulsa ESPACIO para empezar");
+    case State::RUNNING:
+      return tr(lang, "RUNNING", "EN MARCHA");
+    case State::PAUSED:
+      return tr(lang, "PAUSED", "PAUSADO");
+    case State::FINISHED:
+      return tr(lang, "TIME'S UP", "TIEMPO CUMPLIDO");
+    case State::SW_IDLE:
+      return tr(lang, "STOPWATCH READY  ·  press SPACE",
+                      "CRONÓMETRO LISTO  ·  pulsa ESPACIO");
+    case State::SW_RUN:
+      return tr(lang, "STOPWATCH RUNNING", "CRONÓMETRO EN MARCHA");
+    case State::SW_PAUSED:
+      return tr(lang, "STOPWATCH PAUSED", "CRONÓMETRO PAUSADO");
+    case State::SETTING:
+      return tr(lang, "SET DURATION", "DEFINIR DURACIÓN");
   }
   return "";
 }
@@ -126,8 +140,12 @@ std::vector<std::string> big_lines(const std::string& text) {
 }
 
 void render(const RenderInfo& I, int W, int H) {
+  auto t = [&](const char* en, const char* es) { return tr(I.lang, en, es); };
+
   if (W < 42 || H < 16) {
-    std::string msg = "Terminal demasiado pequeña  ·  mínimo 42x16";
+    std::string msg =
+        t("Terminal too small  ·  minimum 42x16",
+          "Terminal demasiado pequeña  ·  mínimo 42x16");
     std::string out;
     out += "\x1b[2J\x1b[H";
     int x = std::max(0, (W - wcells(msg)) / 2);
@@ -169,8 +187,9 @@ void render(const RenderInfo& I, int W, int H) {
 
   // Modo · estado
   std::string mode_name =
-      (I.mode == Mode::COUNTDOWN) ? "CUENTA ATRÁS" : "CRONÓMETRO";
-  std::string st_line = mode_name + "   ·   " + status_text(I.state);
+      (I.mode == Mode::COUNTDOWN) ? t("COUNTDOWN", "CUENTA ATRÁS")
+                                  : t("STOPWATCH", "CRONÓMETRO");
+  std::string st_line = mode_name + "   ·   " + status_text(I.state, I.lang);
   center(2, st_line, state_color(I.state));
 
   if (I.state == State::SETTING) {
