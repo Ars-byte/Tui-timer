@@ -109,6 +109,7 @@ bool parse_duration(const std::string& in, double& out) {
 struct App {
   tui::Mode mode = tui::Mode::COUNTDOWN;
   tui::State state = tui::State::IDLE;
+  tui::Lang lang = tui::Lang::EN;
   double total = 300.0;  // 5:00 por defecto
   double elapsed_base = 0.0;
   bool running = false;
@@ -237,6 +238,10 @@ bool handle_key(App& a, int k) {
     case 'M':
       a.switch_mode();
       break;
+    case 'l':
+    case 'L':
+      a.lang = (a.lang == tui::Lang::ES) ? tui::Lang::EN : tui::Lang::ES;
+      break;
     default:
       break;
   }
@@ -284,6 +289,7 @@ int main(int argc, char** argv) {
     tui::RenderInfo info;
     info.mode = app.mode;
     info.state = app.state;
+    info.lang = app.lang;
     info.input = app.input;
     info.input_error = app.input_error;
     if (app.mode == tui::Mode::COUNTDOWN) {
