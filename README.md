@@ -1,3 +1,5 @@
+**English** · [Español](README.es.md)
+
 # TUI Timer
 
 Stopwatch and countdown with a comfortable TUI, in C++17 and **no
