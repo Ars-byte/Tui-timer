@@ -7,9 +7,9 @@ short_desc="TUI stopwatch and countdown timer"
 maintainer="Ars-byte"
 license="MIT"
 homepage="https://github.com/Ars-byte/Tui-timer"
-_commit=938d7ecbe77254086a7572fdbbe473f4d27ae542
+_commit=171449b872bee453a9bc9cddad06a4a1594009be
 distfiles="https://github.com/Ars-byte/Tui-timer/archive/${_commit}.tar.gz"
-checksum=9c18f371c0b4e18ce9e1c638bd89b99193e510f352bff12ae2d34d9f934afe83
+checksum=b49fdf79c54cf35c429098a41a35779549f198d7b0f12f4c63e66f226ebd1c38
 
 do_install() {
     vbin build/tui-timer
