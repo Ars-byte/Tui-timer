@@ -267,17 +267,25 @@ void render(const RenderInfo& I, int W, int H) {
   // Ayuda (abajo)
   int hy = H - 3;
   if (I.state == State::SETTING) {
-    center(hy, "[0-9 :] escribir     [ENTER] aceptar     [ESC] cancelar",
+    center(hy, t("[0-9 :] type     [ENTER] accept     [ESC] cancel",
+                 "[0-9 :] escribir     [ENTER] aceptar     [ESC] cancelar"),
            DIM);
-    center(hy + 1, "Puedes escribir 5:30, 90, 2m o 1h", DIM);
+    center(hy + 1, t("You can type 5:30, 90, 2m or 1h",
+                     "Puedes escribir 5:30, 90, 2m o 1h"),
+           DIM);
   } else if (I.mode == Mode::COUNTDOWN) {
-    center(hy, "[ESPACIO] empezar / pausar     [N] nueva duración     [S] reiniciar",
+    center(hy, t("[SPACE] start / pause     [N] new duration     [S] reset",
+                 "[ESPACIO] empezar / pausar     [N] nueva duración     [S] reiniciar"),
            DIM);
-    center(hy + 1, "[M] cronómetro     [Q] salir", DIM);
+    center(hy + 1, t("[M] stopwatch     [L] language     [Q] quit",
+                     "[M] cronómetro     [L] idioma     [Q] salir"),
+           DIM);
   } else {
-    center(hy, "[ESPACIO] empezar / parar     [S] reiniciar     [M] cuenta atrás",
+    center(hy, t("[SPACE] start / stop     [S] reset     [M] countdown",
+                 "[ESPACIO] empezar / parar     [S] reiniciar     [M] cuenta atrás"),
            DIM);
-    center(hy + 1, "[Q] salir", DIM);
+    center(hy + 1, t("[L] language     [Q] quit", "[L] idioma     [Q] salir"),
+           DIM);
   }
 
   std::cout << out << std::flush;
