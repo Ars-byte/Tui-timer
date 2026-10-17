@@ -194,7 +194,7 @@ void render(const RenderInfo& I, int W, int H) {
 
   if (I.state == State::SETTING) {
     // Pantalla de definición de duración
-    center(4, "Introduce la duración:", CYAN BOLD);
+    center(4, t("Enter the duration:", "Introduce la duración:"), CYAN BOLD);
 
     std::string shown = I.input;
     if (wcells(shown) > W - 12) {
@@ -205,11 +205,14 @@ void render(const RenderInfo& I, int W, int H) {
     std::string vis = " " + shown + " ";
     center_vis(5, vis, REV " " + shown + " " RST);
 
-    center_vis(7, "Formatos:  5:30  ·  90 (segundos)  ·  2m  ·  1h",
-               DIM "Formatos:  5:30  ·  90 (segundos)  ·  2m  ·  1h" RST);
-    if (I.input_error)
-      center_vis(8, "Duración no válida. Inténtalo de nuevo.",
-                 RED "Duración no válida. Inténtalo de nuevo." RST);
+    std::string fmt = t("Formats:  5:30  ·  90 (seconds)  ·  2m  ·  1h",
+                        "Formatos:  5:30  ·  90 (segundos)  ·  2m  ·  1h");
+    center_vis(7, fmt, DIM + fmt + RST);
+    if (I.input_error) {
+      std::string err =
+          t("Invalid duration. Try again.", "Duración no válida. Inténtalo de nuevo.");
+      center_vis(8, err, RED + err + RST);
+    }
   } else {
     // Dígitos grandes
     std::string big_text = (I.mode == Mode::COUNTDOWN)
