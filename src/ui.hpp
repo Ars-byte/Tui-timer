@@ -7,6 +7,8 @@ namespace tui {
 
 enum class Mode { COUNTDOWN, STOPWATCH };
 
+enum class Lang { EN, ES };
+
 enum class State {
   IDLE,       // cuenta atrás lista para empezar
   RUNNING,    // cuenta atrás en marcha
@@ -21,6 +23,7 @@ enum class State {
 struct RenderInfo {
   Mode mode = Mode::COUNTDOWN;
   State state = State::IDLE;
+  Lang lang = Lang::EN;
   double remaining = 0.0;  // segundos restantes (cuenta atrás)
   double total = 0.0;      // duración total en segundos (cuenta atrás)
   double elapsed = 0.0;    // tiempo transcurrido (cronómetro)
