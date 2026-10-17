@@ -1,55 +1,56 @@
 # TUI Timer
 
-Cronómetro y cuenta atrás con interfaz TUI cómoda, en C++17 y **sin
-dependencias** (ANSI puro + termios, no necesita ncurses).
+Stopwatch and countdown with a comfortable TUI, in C++17 and **no
+dependencies** (pure ANSI + termios, no ncurses needed).
 
-## Compilar y ejecutar
+## Build and run
 
 ```sh
 cmake -B build
 cmake --build build
-./build/tui-timer          # con la duración por defecto (5:00)
-./build/tui-timer 25:00    # o arranca ya con otra duración
+./build/tui-timer          # with the default duration (5:00)
+./build/tui-timer 25:00    # or start with a different duration
 ```
 
-## Controles
+## Controls
 
-| Tecla      | Acción                                        |
-| ---------- | --------------------------------------------- |
-| `ESPACIO`  | Empezar / pausar (o reanudar)                 |
-| `N`        | Nueva duración (cuenta atrás)                 |
-| `S`        | Detener / reiniciar                           |
-| `M`        | Cambiar entre cuenta atrás y cronómetro       |
-| `Q`        | Salir                                         |
+| Key      | Action                                     |
+| -------- | ------------------------------------------ |
+| `SPACE`  | Start / pause (or resume)                  |
+| `N`      | New duration (countdown)                   |
+| `S`      | Stop / reset                               |
+| `M`      | Switch between countdown and stopwatch     |
+| `L`      | Switch language (English / Spanish)        |
+| `Q`      | Quit                                       |
 
-### Escribir una duración (pantalla `N`)
+### Entering a duration (screen `N`)
 
-- `5:30`  → 5 minutos 30 segundos
-- `90`    → 90 segundos
-- `2m`    → 2 minutos
-- `1h`    → 1 hora
-- `ESC`   → cancelar
+- `5:30`  → 5 minutes 30 seconds
+- `90`    → 90 seconds
+- `2m`    → 2 minutes
+- `1h`    → 1 hour
+- `ESC`   → cancel
 
-## Características
+## Features
 
-- Dígitos grandes, barra de progreso y colores según el estado
-  (verde en marcha, amarillo pausado, rojo parpadeante al terminar).
-- Pitido al terminar y cada 2 segundos mientras esté finalizado.
-- Cuenta atrás y cronómetro (con centésimas).
-- Se adapta al tamaño de la terminal y se puede pausar/retomar.
-- La terminal vuelve a su estado original al salir.
+- Big digits, progress bar and colors depending on the state
+  (green running, yellow paused, blinking red when finished).
+- Beep when it finishes and every 2 seconds while finished.
+- Countdown and stopwatch (with hundredths).
+- Adapts to the terminal size and can be paused/resumed.
+- The terminal is restored to its original state on exit.
 
 <img width="629" height="465" alt="image" src="https://github.com/user-attachments/assets/f99c8d8e-dca4-4b1b-b879-e444f96bb2dc" />
 
 
-## Estructura
+## Structure
 
 ```
 tui-timer/
 ├── CMakeLists.txt
 ├── README.md
 └── src/
-    ├── main.cpp   # bucle principal, entrada y estados
-    ├── ui.hpp     # interfaz de la UI
-    └── ui.cpp     # renderizado ANSI (marco, dígitos, barras)
+    ├── main.cpp   # main loop, input and states
+    ├── ui.hpp     # UI interface
+    └── ui.cpp     # ANSI rendering (frame, digits, bars)
 ```
