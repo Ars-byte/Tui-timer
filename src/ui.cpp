@@ -247,18 +247,21 @@ void render(const RenderInfo& I, int W, int H) {
 
     // Línea de información
     if (I.state == State::FINISHED) {
-      center_vis(11, "***  ¡TIEMPO CUMPLIDO!  ***",
-                 RED BOLD BLINK "***  ¡TIEMPO CUMPLIDO!  ***" RST);
+      std::string done = t("***  TIME'S UP!  ***", "***  ¡TIEMPO CUMPLIDO!  ***");
+      center_vis(11, done, RED BOLD BLINK + done + RST);
     } else {
-      std::string vis = "Total " + fmt_mmss(I.total) + "    ·    Quedan " +
+      std::string vis = t("Total ", "Total ") + fmt_mmss(I.total) +
+                        t("    ·    Remaining ", "    ·    Quedan ") +
                         fmt_mmss(std::max(0.0, I.remaining));
       center_vis(11, vis, DIM + vis + RST);
     }
   } else {
-    std::string vis = "Tiempo exacto: " + fmt_precise(I.elapsed);
+    std::string vis = t("Exact time: ", "Tiempo exacto: ") +
+                      fmt_precise(I.elapsed);
     center_vis(10, vis, DIM + vis + RST);
-    center_vis(11, "Pulsa ESPACIO para empezar o parar",
-               DIM "Pulsa ESPACIO para empezar o parar" RST);
+    std::string hint = t("Press SPACE to start or stop",
+                         "Pulsa ESPACIO para empezar o parar");
+    center_vis(11, hint, DIM + hint + RST);
   }
 
   // Ayuda (abajo)
