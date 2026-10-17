@@ -42,7 +42,7 @@ cmake --build build
 - Adapts to the terminal size and can be paused/resumed.
 - The terminal is restored to its original state on exit.
 
-<img width="629" height="465" alt="image" src="https://github.com/user-attachments/assets/f99c8d8e-dca4-4b1b-b879-e444f96bb2dc" />
+<img width="693" height="480" alt="image" src="https://github.com/user-attachments/assets/8eaa668e-23a1-4181-8662-99a25666a9ff" />
 
 
 ## Structure
