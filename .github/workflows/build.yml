@@ -1,0 +1,61 @@
+name: Build TUI Timer
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Compile project
+        run: |
+          rm -rf build
+          cmake -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build --parallel
+
+      - name: Create tarball
+        run: tar -czvf tui-timer.tar.gz -C build tui-timer
+
+      - name: Checksums
+        run: sha256sum build/tui-timer tui-timer.tar.gz > SHA256SUMS
+
+      - name: Prepare release notes
+        run: |
+          BIN_SHA=$(awk '$2=="build/tui-timer" {print $1}' SHA256SUMS)
+          TARBALL_SHA=$(awk '$2=="tui-timer.tar.gz" {print $1}' SHA256SUMS)
+          {
+            echo "## Fast install"
+            echo
+            echo '```sh'
+            echo "curl -fsSL https://github.com/${GITHUB_REPOSITORY}/releases/latest/download/tui-timer -o /tmp/tui-timer && install -Dm755 /tmp/tui-timer ~/.local/bin/tui-timer"
+            echo '```'
+            echo
+            echo "Make sure \`~/.local/bin\` is in your \`PATH\`."
+            echo
+            echo "### Checksums"
+            echo
+            echo "- \`tui-timer\` — \`sha256:${BIN_SHA}\`"
+            echo "- \`tui-timer.tar.gz\` — \`sha256:${TARBALL_SHA}\`"
+            echo
+            echo "Built from commit \`${GITHUB_SHA}\`."
+          } > RELEASE_NOTES.md
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: Latest build
+          body_path: RELEASE_NOTES.md
+          files: |
+            build/tui-timer
+            tui-timer.tar.gz
+            SHA256SUMS

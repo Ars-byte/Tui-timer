@@ -1,3 +1,0 @@
-/home/ars/Projects/tui-timer/build/CMakeFiles/tui-timer.dir
-/home/ars/Projects/tui-timer/build/CMakeFiles/edit_cache.dir
-/home/ars/Projects/tui-timer/build/CMakeFiles/rebuild_cache.dir
